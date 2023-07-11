@@ -2,34 +2,36 @@
 
 @section('content')
     
-    <div class="container">
+    <div class="container my-3">
         <div class="row">
 
-            <h1 class="text-center">CREA UN NUOVO PROGETTO</h1>
+            <h1 class="text-center">MODIFICA IL PROGETTO</h1>
 
-            @if ($errors->any)
+            @if ($errors->any())
 
                 <ul>
-                    @foreach ($errors->any as $error)
+                    @foreach ($errors->all() as $error)
                         {{ $error }}
                     @endforeach
                 </ul>
                 
             @endif
-            <form action="{{ route('admin.projects.store') }}" method="POST">
+            <form action="{{ route('admin.projects.update', $project) }}" method="POST">
                 @csrf
+
+                @method('PUT')
             
                 <label for="title">Titolo</label>
-                <input class="form-control mb-3" type="text" name="title" id="title" value="{{ old('title') }}">
+                <input class="form-control mb-3" type="text" name="title" id="title" value="{{ $project['title'] }}">
                 @error('title')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
 
                 <label for="description">Descrizione</label>
-                <textarea class="form-control mb-3" name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
+                <textarea class="form-control mb-3" name="description" id="description" cols="30" rows="10">{{ $project['description'] }}</textarea>
 
                 <label for="image">URL Immagine</label>
-                <input class="form-control mb-3" type="text" name="image" id="image" value="{{ old('image') }}">
+                <input class="form-control mb-3" type="text" name="image" id="image" value="{{ $project['image'] }}">
 
                 <input type="submit" class="form-control btn btn-primary"> 
 

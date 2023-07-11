@@ -13,7 +13,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,26 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|min:5|max:30',
+            'description' => 'max:65535',
+            'image' => 'url|max:255'
+        ];
+    }
+
+    /**
+     * Get the validation message
+     * 
+     * @return array<string, mixed>
+     */
+    public function messages()
+    {
+        return [
+            'title.required' => 'Il titolo  è obbligatorio',
+            'title.min' => 'Il titolo deve avere almeno 5 caratteri',
+            'title.max' => 'Il titolo non può essere più lungo di 30 caratteri',
+            'description.max' => 'La descrizione non può avere più di 65535 caratteri',
+            'image.url' => "L'url per l'immagine non è valido",
+            'image.max' => "L'url per l'immagine è troppo lungo"
         ];
     }
 }
